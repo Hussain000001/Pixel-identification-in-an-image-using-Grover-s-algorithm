@@ -1,0 +1,9 @@
+qiskit
+qiskit-aqua
+qiskit-aer
+cirq
+numpy
+matplotlib
+seaborn
+sympy
+Pillow
