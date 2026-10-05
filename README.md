@@ -120,3 +120,11 @@ The darkest pixel has intensity 0 and is located at position (0,0).
 Grover's algorithm successfully identifies the darkest pixel. The measurement result `0000000000` corresponds to the pixel at position `(0,0)` with intensity `0`.
 
 ![Grover histogram](results/grover_histogram.png)
+
+## How to Run
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/Hussain000001/Pixel-identification-in-an-image-using-Grover-s-algorithm.git
+cd Pixel-identification-in-an-image-using-Grover-s-algorithm
