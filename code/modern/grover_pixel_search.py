@@ -137,9 +137,10 @@ print(counts_grover)
 # --------------------------------------------------
 # 8. Identify the darkest pixel
 # --------------------------------------------------
+# For this example, the darkest pixel is already known:
+# intensity 0 at position (0,0), corresponding to |0000000000>
 
 target_state = "0000000000"
-
 target_counts = counts_grover.get(
     target_state,
     0
