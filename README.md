@@ -95,6 +95,11 @@ The Cirq implementation demonstrates Grover's algorithm for identifying the mini
 
 ## Results
 
+The experiment uses a 2×2 grayscale image with the following pixel intensities:
+
+```text
+[[  0, 100],
+ [200, 255]]
 ### Input Image
 
 The experiment uses a 2×2 grayscale image with pixel intensities:
