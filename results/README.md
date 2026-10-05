@@ -1,25 +1,40 @@
 # Results
 
-This directory contains the results and visual outputs associated with the project.
+This directory contains the experimental results and visual outputs from the quantum image encoding and Grover search implementation.
 
-The results may include:
+## Input Image
 
-- Quantum circuit diagrams
-- Measurement histograms
-- Pixel identification results
-- Image-processing outputs
-- Visualizations generated from the Qiskit and Cirq implementations
+The experiment uses a 2×2 grayscale image with the following pixel intensities:
 
-The results presented here are associated with the experiments and simulations described in the Master's thesis.
+\[
+\begin{bmatrix}
+0 & 100 \\
+200 & 255
+\end{bmatrix}
+\]
 
-## Planned Results
+The darkest pixel has intensity 0 and is located at position `(0,0)`.
 
-The following outputs can be added to this directory:
+![Original 2×2 grayscale image](original_2x2_image.png)
 
-1. NEQR image encoding results
-2. Qiskit Grover measurement histogram
-3. Cirq Grover measurement frequencies
-4. Identified darkest/target pixel
-5. 3D visualization of the identified pixel
+## NEQR Encoding
 
-Additional result files will be added as the implementations are reproduced and verified in the current software environment.
+The four pixels are encoded using 10 qubits:
+
+| Position | Intensity | Binary intensity |
+|----------|-----------|------------------|
+| `00` | 0 | `00000000` |
+| `01` | 100 | `01100100` |
+| `10` | 200 | `11001000` |
+| `11` | 255 | `11111111` |
+
+The NEQR simulation successfully reproduced all four encoded states.
+
+## Grover Search
+
+Grover's algorithm was then used to search for the pixel with minimum intensity.
+
+The target state was:
+
+```text
+0000000000
