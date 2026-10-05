@@ -169,6 +169,19 @@ Grover's algorithm successfully identifies the darkest pixel. The measurement re
 
 ## How to Run
 
+## Thesis
+
+This repository is based on the Master's thesis:
+
+**"Pixel identification in an image using Grover's algorithm"**
+
+**Author:** Mohd Hussain Mir  
+**Degree:** Master of Science in Physics  
+**Institution:** National Institute of Technology Srinagar  
+**Supervisor:** Dr. Harkirat Singh
+
+The complete thesis is available in the [`thesis/`](thesis/) directory.
+
 ### 1. Clone the repository
 
 ```bash
