@@ -44,6 +44,32 @@ The four pixel positions are represented by:
 
 The corresponding intensity values are encoded as 8-bit binary strings.
 
+## Project Workflow
+
+The project follows these main steps:
+
+1. **Create a grayscale image**
+   - A 2×2 grayscale image is used as the test image.
+
+2. **Represent the image using NEQR**
+   - Pixel positions are represented using 2 qubits.
+   - Pixel intensities are represented using 8 qubits.
+
+3. **Construct the Grover oracle**
+   - The oracle marks the target pixel state.
+
+4. **Apply amplitude amplification**
+   - The Grover diffuser amplifies the probability of the marked state.
+
+5. **Measure the quantum circuit**
+   - The circuit is executed using the Qiskit Aer simulator.
+
+6. **Identify the target pixel**
+   - The most probable measurement result corresponds to the target pixel.
+
+7. **Analyze the result**
+   - The measurement distribution is visualized using a histogram.
+
 ## Grover's Algorithm
 
 Grover's algorithm is used as a quantum search procedure to identify a marked state.
