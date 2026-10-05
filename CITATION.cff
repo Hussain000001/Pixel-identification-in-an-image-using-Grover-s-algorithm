@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+title: "Pixel identification in an image using Grover's algorithm"
+message: "If you use this work, please cite the Master's thesis."
+type: software
+authors:
+  - family-names: "Mir"
+    given-names: "Mohd Hussain"
+    affiliation: "National Institute of Technology Srinagar"
+    orcid: ""
+repository-code: "https://github.com/Hussain000001/Pixel-identification-in-an-image-using-Grover-s-algorithm"
+abstract: "A quantum computing project exploring pixel identification in grayscale images using Grover's search algorithm and NEQR image representation."
+keywords:
+  - quantum computing
+  - Grover's algorithm
+  - quantum image processing
+  - NEQR
+  - quantum image representation
+  - Qiskit
