@@ -93,6 +93,26 @@ The Cirq implementation demonstrates Grover's algorithm for identifying the mini
 └── thesis/
     └── Final project thesis.pdf
 
+## Quantum Representation
+
+For the 2×2 grayscale image, each pixel is represented by:
+
+- **2 qubits** for the pixel position
+- **8 qubits** for the grayscale intensity
+
+Therefore, the complete representation uses **10 qubits**.
+
+The four pixels are represented as:
+
+| Pixel position | Grayscale value | Binary representation |
+|---|---:|---|
+| `(0,0)` | 0 | `00000000` |
+| `(0,1)` | 100 | `01100100` |
+| `(1,0)` | 200 | `11001000` |
+| `(1,1)` | 255 | `11111111` |
+
+The darkest pixel in this example is the pixel at `(0,0)`, with intensity `0`.
+
 ## Results
 
 The experiment uses a 2×2 grayscale image with the following pixel intensities:
