@@ -92,3 +92,26 @@ The Cirq implementation demonstrates Grover's algorithm for identifying the mini
 │
 └── thesis/
     └── Final project thesis.pdf
+
+## Results
+
+### Input Image
+
+The experiment uses a 2×2 grayscale image with pixel intensities:
+
+\[
+\begin{bmatrix}
+0 & 100 \\
+200 & 255
+\end{bmatrix}
+\]
+
+The darkest pixel has intensity 0 and is located at position (0,0).
+
+![Original 2×2 grayscale image](results/original_2x2_image.png)
+
+### Grover Search Result
+
+Grover's algorithm successfully identifies the darkest pixel. The measurement result `0000000000` corresponds to the pixel at position `(0,0)` with intensity `0`.
+
+![Grover histogram](results/grover_histogram.png)
