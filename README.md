@@ -23,6 +23,8 @@ The primary objective of this project is to explore the use of Grover's quantum 
 
 The thesis demonstrates the approach using a small grayscale image and quantum circuit simulations.
 
+![Original 2×2 grayscale image](./results/original_2x2_image.png)
+
 ## Quantum Image Representation
 
 The project uses **NEQR (Novel Enhanced Quantum Representation)** to represent image information.
