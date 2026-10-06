@@ -22,6 +22,15 @@ The project combines concepts from:
 The primary objective of this project is to explore the use of Grover's quantum search algorithm for identifying a particular pixel in a grayscale image.
 
 The thesis demonstrates the approach using a small grayscale image and quantum circuit simulations.
+## Results
+
+## Input Image
+
+The experiment uses the following 2 × 2 grayscale image:
+
+```text
+[[  0, 100],
+ [200, 255]]
 
 ![Original 2×2 grayscale image](./results/original_2x2_image.png)
 
@@ -82,9 +91,13 @@ The implementation includes:
 5. Measurement of the quantum register.
 6. Analysis of the resulting measurement distribution.
 
+![Grover histogram](./results/grover_histogram.png)
+
 ## Implementations
 
 The repository contains both the original implementations associated with the Master's thesis and a modernized Qiskit implementation.
+
+
 
 ### Original Implementations
 
