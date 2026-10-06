@@ -136,25 +136,38 @@ The darkest pixel in this example is the pixel at `(0,0)`, with intensity `0`.
 
 ## Results
 
+### Input Image
+
 The experiment uses a 2×2 grayscale image with the following pixel intensities:
 
 ```text
 [[  0, 100],
  [200, 255]]
-### Input Image
-
-The experiment uses a 2×2 grayscale image with pixel intensities:
-
-\[
-\begin{bmatrix}
-0 & 100 \\
-200 & 255
-\end{bmatrix}
-\]
 
 The darkest pixel has intensity 0 and is located at position (0,0).
 
 ![Original 2×2 grayscale image](results/original_2x2_image.png)
+
+### Grover Search
+
+Grover's algorithm was used to search for the target state corresponding to the darkest pixel.
+
+For this 2×2 example, the target state is:
+
+```text
+0000000000
+
+
+Then add the conclusion immediately after it:
+
+```markdown
+### Conclusion
+
+The simulation successfully identified the darkest pixel in the 2×2 grayscale image:
+
+```text
+Position:  (0,0)
+Intensity: 0
 
 ## Modern Implementation
 
