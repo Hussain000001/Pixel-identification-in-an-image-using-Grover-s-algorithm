@@ -1,4 +1,4 @@
-<img width="260" height="146" alt="image" src="https://github.com/user-attachments/assets/83a28951-2c5e-44de-8721-ab8587f16317" /># Pixel Identification in an Image Using Grover's Algorithm
+# Pixel Identification in an Image Using Grover's Algorithm
 
 A Master's thesis project exploring the application of Grover's quantum search algorithm to pixel identification in grayscale images, using quantum image representation and quantum circuit simulation
 
