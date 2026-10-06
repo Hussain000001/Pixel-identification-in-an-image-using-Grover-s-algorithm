@@ -1,21 +1,10 @@
 # Pixel Identification in an Image Using Grover's Algorithm
 
-A Master's thesis project exploring the application of **Grover's quantum search algorithm** to image processing and pixel identification.
+A Master's thesis project exploring the application of Grover's quantum search algorithm to pixel identification in grayscale images, using quantum image representation and quantum circuit simulation
 
 ## About the Project
 
-This project investigates how quantum search techniques can be applied to identify and locate specific pixels within a grayscale image.
-
-The work combines concepts from:
-
-- Quantum computing
-- Grover's search algorithm
-- Quantum image processing
-- NEQR (Novel Enhanced Quantum Representation)
-- Image processing
-- Quantum circuit simulation
-
-The project demonstrates the representation of grayscale image information using quantum states and the use of Grover's algorithm for searching for a target pixel.
+This project investigates how quantum search techniques can be used to identify and locate a target pixel within a grayscale image. The thesis explores NEQR (Novel Enhanced Quantum Representation) for representing pixel position and intensity, followed by Grover's algorithm for quantum search.
 
 ## Project Objective
 
@@ -100,21 +89,27 @@ The Qiskit implementation includes:
 ### Cirq
 
 The Cirq implementation demonstrates Grover's algorithm for identifying the minimum-intensity (darkest) pixel in a randomly generated 2 × 2 grayscale image.
-
 ## Repository Structure
 
 ```text
 .
 ├── README.md
+├── CITATION.cff
 ├── requirements.txt
 │
 ├── code/
+│   ├── modern/
+│   │   └── grover_pixel_search.py
+│   │
 │   └── original/
 │       ├── qiskit_neqr.py
 │       ├── qiskit_grover.py
 │       └── cirq_grover.py
 │
 ├── results/
+│   ├── README.md
+│   ├── original_2x2_image.png
+│   └── grover_histogram.png
 │
 └── thesis/
     └── Final project thesis.pdf
