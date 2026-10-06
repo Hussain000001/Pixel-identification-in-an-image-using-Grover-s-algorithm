@@ -1,4 +1,4 @@
-# Pixel Identification in an Image Using Grover's Algorithm
+<img width="260" height="146" alt="image" src="https://github.com/user-attachments/assets/83a28951-2c5e-44de-8721-ab8587f16317" /># Pixel Identification in an Image Using Grover's Algorithm
 
 A Master's thesis project exploring the application of Grover's quantum search algorithm to pixel identification in grayscale images, using quantum image representation and quantum circuit simulation
 
@@ -155,6 +155,19 @@ The experiment uses a 2×2 grayscale image with pixel intensities:
 The darkest pixel has intensity 0 and is located at position (0,0).
 
 ![Original 2×2 grayscale image](results/original_2x2_image.png)
+
+## Modern Implementation
+
+The repository includes a modern Qiskit implementation in:
+
+`code/modern/grover_pixel_search.py`
+
+This implementation uses current Qiskit and Qiskit Aer APIs to demonstrate Grover's search on a 10-qubit system.
+
+For the 2×2 example, the target state is:
+
+```text
+0000000000
 
 ### Grover Search Result
 
