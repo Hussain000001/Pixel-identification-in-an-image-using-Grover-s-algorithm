@@ -157,19 +157,13 @@ For this 2×2 example, the target state is:
 ```text
 0000000000
 
-
-Then add the conclusion immediately after it:
-
-```markdown
 ### Conclusion
 
 The simulation successfully recovered the marked quantum state corresponding to the darkest pixel in the 2×2 grayscale image:
 
-```text
 Position:  (0,0)
 Intensity: 0
 
-```text
 Position:  (0,0)
 Intensity: 0
 
