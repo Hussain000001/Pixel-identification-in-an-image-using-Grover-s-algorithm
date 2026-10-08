@@ -1,0 +1,228 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Pixel Identification with Grover's Algorithm</title><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230a1020'/%3E%3Ctext x='50' y='68' font-size='56' text-anchor='middle' fill='%233fd0ff'%3E%7C0%E2%9F%A9%3C/text%3E%3C/svg%3E">
+<meta name="description" content="An interactive visual explanation of NEQR image encoding, CCX gates and Grover's algorithm on a 2×2 image. Built from an M.Sc. Physics thesis for students new to quantum computing.">
+<meta property="og:type" content="website"><meta property="og:title" content="Pixel Identification with Grover's Algorithm: Interactive Lab"><meta property="og:description" content="Step through NEQR encoding, CCX gates, the Grover oracle and diffuser, and find the darkest pixel of a 2×2 image. Runs in your browser."><meta name="twitter:card" content="summary"><meta name="theme-color" content="#0a1020">
+<style>
+:root{--bg:#0a1020;--pn:#111a30;--p2:#17233f;--bd:#27375c;--tx:#e8edf7;--mu:#9aa8c7;--cy:#3fd0ff;--vi:#a78bfa;--gr:#6ee7a0;--am:#fbbf24;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 84px)}
+*{box-sizing:border-box}
+body{margin:0;padding-top:64px;background:var(--bg);color:var(--tx);font:17px/1.65 Georgia,'Iowan Old Style',serif;overflow-x:hidden}
+h1,h2,h3,button,nav,table,.ui,small,input{font-family:system-ui,-apple-system,'Segoe UI',sans-serif}
+.mono,.bit{font-family:ui-monospace,Menlo,Consolas,monospace}
+.ket{font-family:'Cambria Math',Cambria,'STIX Two Math',Georgia,serif;color:var(--cy);white-space:nowrap}
+#hd{position:fixed;top:0;left:0;right:0;z-index:9;background:#0a1020ee;backdrop-filter:blur(8px);border-bottom:1px solid var(--bd);padding:calc(env(safe-area-inset-top,0px) + 6px) 10px 6px;display:flex;gap:8px;align-items:center}
+#pn{flex:1;display:flex;gap:4px;overflow-x:auto;white-space:nowrap}
+#pn a{color:var(--mu);text-decoration:none;font:600 12px system-ui;padding:8px 9px;border-radius:6px;border:1px solid transparent}
+#pn a.on{color:var(--cy);border-color:var(--cy)}
+#hd button{padding:6px 10px;min-height:40px;font-size:13px}
+section{max-width:980px;margin:0 auto;padding:54px 16px;border-bottom:1px solid var(--bd)}
+h1{font-size:clamp(28px,5vw,46px);line-height:1.15;margin:.2em 0}
+h2{font-size:clamp(22px,3.4vw,30px);margin:0 0 .3em;color:#fff}h2 i{color:var(--cy);font-style:normal;font-size:.6em;margin-right:8px}
+.kick{color:var(--cy);letter-spacing:.14em;font-size:12px;text-transform:uppercase}.lead,.mu{color:var(--mu)}
+.panel{background:var(--pn);border:1px solid var(--bd);border-radius:12px;padding:16px;margin:14px 0}
+.row{display:flex;flex-wrap:wrap;gap:18px;align-items:flex-start}.row>*{min-width:0}
+button{background:var(--p2);color:var(--tx);border:1px solid var(--bd);border-radius:8px;padding:10px 14px;min-height:44px;cursor:pointer;font-size:15px}
+button:hover{border-color:var(--cy)}.pri,#hd .on{background:var(--cy);color:#04121f;border-color:var(--cy);font-weight:600}
+.ctl{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0}
+.img{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px;width:min(260px,100%)}
+.px{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;font:700 22px system-ui;cursor:pointer;border:3px solid transparent;border-radius:4px}
+.px small{font-size:11px;font-weight:400;opacity:.7}.px.on{border-color:var(--cy);box-shadow:0 0 0 3px #3fd0ff55}
+.bit{display:inline-flex;width:32px;height:38px;align-items:center;justify-content:center;border:1px solid var(--bd);border-radius:6px;margin:2px;transition:.35s;color:var(--mu)}
+.bit.one{background:#12485f;color:var(--cy);border-color:var(--cy)}
+.qc{display:inline-flex;flex-direction:column;align-items:center}.qc small{color:var(--mu);font-size:11px}
+table{border-collapse:collapse;width:100%;font-size:14px}td,th{border-bottom:1px solid var(--bd);padding:6px 8px;text-align:left}th{color:var(--mu);font-weight:600}
+tr.on td,tr.lit td{background:#12485f55}tr.lit td{background:#3fd0ff2e;color:#fff}
+.cs{overflow-x:auto;border:1px solid var(--bd);border-radius:10px;background:#0c1426}
+.gi{font-size:13px;color:var(--mu);min-height:3.4em;margin:6px 0}
+.term{cursor:pointer;padding:2px 4px;border-radius:5px;transition:opacity .5s}.term:hover,.term.on{background:#3fd0ff30}.term.hid{opacity:0}
+.eqb{font-size:clamp(15px,2.6vw,21px);line-height:1.9;overflow-wrap:anywhere}
+.chip{display:inline-block;border:1px solid var(--vi);color:var(--vi);padding:6px 12px;border-radius:8px;margin:3px;font:600 14px system-ui}
+.wr{padding:8px 12px;border:1px solid var(--bd);border-radius:8px;margin:5px 0;transition:.3s}.wr.lit{background:#3fd0ff2e;border-color:var(--cy)}.wr.dim{opacity:.4}
+.big{font:700 22px system-ui;color:var(--gr);text-align:center;border:1px solid var(--gr);border-radius:10px;padding:12px;margin:8px 0}
+.gsv{width:100%;max-width:640px;display:block}.ok{color:var(--gr)}.warn{border-left:3px solid var(--am);padding-left:12px}
+input[type=number]{width:84px;background:var(--p2);color:var(--tx);border:1px solid var(--bd);border-radius:8px;padding:10px;font-size:16px}
+input[type=range]{width:min(360px,100%)}
+body.beg .r,body:not(.beg) .b{display:none}
+</style></head><body class="beg">
+<header id="hd"><nav id="pn"></nav><button id="pv" title="Previous">←</button><button id="nx" title="Next">→</button><button id="mb" class="on">Beginner</button><button id="mr">Researcher</button></header>
+
+<section id="s1" data-p="1"><div class="kick">M.Sc. Physics thesis · interactive companion</div><h1>Pixel Identification in an Image Using Grover's Algorithm</h1>
+<p class="lead">Image → <b>find the darkest pixel</b> → quantum representation → Grover search → <span class="ket">|0000000000⟩</span> → pixel (0,0) = 0. Click a pixel.</p>
+<div class="row"><div class="img" id="himg"></div><div class="panel" id="hinfo" style="flex:1;min-width:230px"></div></div>
+<button class="pri" data-go="s2">Start the experiment →</button></section>
+
+<section id="s2" data-p="1"><h2><i>02</i>What are we searching, and what must we represent?</h2>
+<p>We want the <b>darkest pixel</b> (smallest intensity). A quantum computer only works on quantum states, so the image needs two registers: <b>which pixel</b> (position) and <b>how bright</b> (intensity). Click the position qubits.</p>
+<div class="panel"><div class="ui"><b>POSITION</b> 2 qubits &nbsp; <button data-q="0" id="q9"></button><button data-q="1" id="q8"></button> <span id="qo"></span></div>
+<p class="ui" style="margin-bottom:2px"><b>INTENSITY</b> 8 qubits</p><div id="qi"></div>
+<p class="mu b">2 qubits → 4 positions. 8 qubits → 256 brightness levels (0–255). Total 10 qubits.</p><p class="mu r">2² = 4 positions; 2⁸ = 256 levels; 10 qubits span a 2¹⁰ = 1024-dimensional Hilbert space (that is <i>not</i> 1024 pixels).</p></div></section>
+
+<section id="s3" data-p="2"><h2><i>03</i>NEQR: tie each position to its intensity</h2>
+<p>NEQR writes the brightness of every pixel in binary into the intensity register, <em>conditioned on</em> the position. Click a row or a term.</p>
+<div class="row"><div style="flex:1;min-width:260px" class="panel"><table id="nt"></table></div><div class="img" id="nimg"></div></div>
+<div class="panel"><div class="eqb" id="nk"></div><div class="ctl"><button id="nan">Reveal terms one by one</button></div><div id="ninfo"></div>
+<p class="mu b">The state is one joint quantum state of position–intensity correlations — not four classical values you can read all at once.</p><p class="mu r">Normalisation: four equal orthogonal terms ⇒ amplitude 1/√4 = ½. Written |intensity⟩|position⟩. The registers are correlated in a non-separable (entangled) way for distinct intensities.</p></div></section>
+
+<section id="s4" data-p="3"><h2><i>04</i>Position superposition</h2>
+<p>Two Hadamard gates turn <span class="ket">|00⟩</span> into an equal-amplitude superposition of the four positions. Step through it.</p><div id="e4"></div>
+<p class="warn">We have created the possible pixel positions, but we have <b>NOT</b> encoded the intensity values yet.</p></section>
+
+<section id="s5" data-p="3"><h2><i>05</i>Intensity register</h2>
+<p>Pick a brightness. Only the qubits that correspond to a binary 1 will ever need to be flipped.</p>
+<div class="panel"><input type="range" id="iv" min="0" max="255" value="100"> <b class="ui" id="ivn"></b><div id="ib" style="margin-top:8px"></div><p id="it"></p></div></section>
+
+<section id="s6" data-p="4"><h2><i>06</i>Controlled encoding: the CCX gate</h2>
+<p>A CCX (Toffoli) has two controls and one target. Click a control pattern.</p><div class="panel" id="ccxp"></div></section>
+
+<section id="s7" data-p="4"><h2><i>07</i>Deep dive: how does the circuit encode ONE particular pixel?</h2>
+<p class="ui" id="dd"></p><p class="mu">Select another pixel in the first section to encode a different one. Use Next to go one gate at a time; click any gate to inspect it.</p><div id="e7"></div></section>
+
+<section id="s8" data-p="4"><h2><i>08</i>Why the other pixels are not affected</h2>
+<p>All four branches are present at once. The temporary X relabels them; then the CCX is applied.</p><div class="panel"><div class="ctl"><button data-w="1">1 · Apply temporary X</button><button data-w="2">2 · Activate CCX</button><button data-w="0">Reset</button></div><div id="wy"></div></div></section>
+
+<section id="s9" data-p="4"><h2><i>09</i>Complete NEQR state</h2>
+<p>Repeat the same recipe for all four pixels. Press Auto or step through.</p><div id="e9"></div></section>
+
+<section id="s10" data-p="5"><h2><i>10</i>Grover oracle</h2>
+<p>Now we have the image. How do we search it? The darkest pixel has intensity 0 at (0,0), so the target is <span class="ket">|0000000000⟩</span> (written |intensity⟩|position⟩).</p>
+<p><b>The oracle changes PHASE, not probability.</b> <span class="r">U<sub>f</sub> = I − 2|m⟩⟨m| ; U<sub>f</sub>|x⟩ = (−1)<sup>f(x)</sup>|x⟩.</span></p><div id="g10"></div></section>
+
+<section id="s11" data-p="6"><h2><i>11</i>Grover diffuser</h2>
+<p><span class="chip">H</span>→<span class="chip">X</span>→<span class="chip">phase flip on |1…1⟩</span>→<span class="chip">X</span>→<span class="chip">H</span></p>
+<p>This performs <b>inversion about the mean</b>: each amplitude a becomes 2ā − a. The oracle marked the target with a phase; the diffuser converts that phase difference into amplitude amplification. <span class="r">D = 2|s⟩⟨s| − I.</span></p><div id="g11"></div></section>
+
+<section id="s12" data-p="7"><h2><i>12</i>Amplitude amplification</h2>
+<p>Repeat oracle + diffuser. The target grows; other states shrink together. Watch the vertical scale: it is rescaled so small amplitudes stay visible.</p>
+<p class="r">θ = arcsin(1/√N), P(t) = sin²((2t+1)θ), k<sub>opt</sub> ≈ (π/4)√N. Two reflections make a rotation by 2θ per iteration. Too many iterations overshoot.</p><div id="g12"></div></section>
+
+<section id="s13" data-p="8"><h2><i>13</i>Final measurement</h2>
+<p>Measuring gives <i>one</i> classical string per shot, sampled with probability a². Try measuring before and after amplification.</p><div id="g13"></div>
+<div class="row"><div class="img mimg"></div><div class="mres panel" style="flex:1;min-width:230px">Press Measure.</div></div>
+<div class="panel"><p class="ui mu">Image → Position → NEQR → Oracle → Diffuser → Measurement → Pixel</p>
+<div class="big">YOU HAVE JUST COMPLETED A QUANTUM IMAGE SEARCH</div><div class="eqb" id="fin"></div>
+<div class="ctl"><button data-go="s3">Explore NEQR Again</button><button data-go="s7">Explore CCX Encoding</button><button data-go="s12">Explore Grover</button><button data-go="s14">Open Student Playground</button></div></div></section>
+
+<section id="s14" data-p="8"><h2><i>14</i>Student playground</h2>
+<p>Try your own 2×2 image (0–255). Everything updates: binary values, the NEQR state, the target (the minimum) and the Grover search.</p>
+<div class="panel"><div class="row"><div style="display:grid;grid-template-columns:90px 90px;gap:8px" id="pgi"></div><div style="flex:1;min-width:240px"><table id="nt2"></table></div></div>
+<div class="eqb" id="pk"></div><div class="ctl"><button id="prs">Reset image</button><button id="penc" class="pri">Encode</button></div></div><div id="g14"></div></section>
+
+<section id="teach" data-p="8"><h2><i>★</i>Teaching mode</h2><p class="mu">Check your understanding, one step at a time.</p><div class="panel" id="qz"></div></section>
+
+<section id="s15" data-p="8"><h2><i>15</i>Research notes</h2>
+<div class="panel warn"><b>Researcher's Note.</b> The current project demonstrates the integration of NEQR-style image representation with Grover amplitude amplification for a marked target state. The current implementation does not yet implement a fully coherent quantum minimum-finding algorithm.<br>A complete minimum finder would need: a reversible comparison, minimum-finding logic, an oracle constructed from the encoded intensities, and no classical extraction of the minimum beforehand. This is a natural research extension, not a hidden flaw.</div>
+<div class="panel"><p><b>What this app shows, honestly</b></p><ul><li>The target string is supplied (the minimum is found classically here); the oracle does not read it from the NEQR state.</li><li>As in the modernised reference code, the Grover stage runs over all 2¹⁰ strings with <span class="ket">|0000000000⟩</span> marked; the NEQR encoding is demonstrated alongside it.</li><li>Thesis simulation: 8183 of 8192 shots on the target (≈ 99.89%) — a sampled estimate, not an exact probability.</li><li>No practical quantum advantage is claimed for 2×2 images. State preparation, oracle cost and measurement must be counted in any end-to-end claim.</li><li>Bit order: strings are shown as |q7…q0⟩|q9 q8⟩. Qiskit often prints bitstrings reversed — always state the convention.</li></ul>
+<p><b>Next steps:</b> a reversible 8-bit comparator, a threshold oracle, a minimum-finding strategy, larger images, resource and noise studies, hardware runs, and classical baselines.</p></div></section>
+
+<footer style="max-width:980px;margin:0 auto;padding:36px 16px 56px;color:var(--mu);font:14px/1.7 system-ui,sans-serif">
+<p><b style="color:var(--tx)">Tip:</b> everything here is interactive. Click pixels, gates, table rows and kets, and use the Playground to try your own 2×2 image. Nothing is sent anywhere; it all runs in your browser.</p>
+<p>Based on the M.Sc. Physics thesis <em>Pixel identification in an image using Grover's algorithm</em> by Mohd Hussain Mir, NIT Srinagar. Supervisor: Dr. Harkirat Singh. Related paper: <a style="color:var(--cy)" href="https://arxiv.org/abs/2107.03039" target="_blank" rel="noopener">arXiv:2107.03039</a>.</p>
+<p>A proof-of-concept teaching tool for NEQR-style encoding and Grover amplitude amplification on a marked target. It is not a demonstration of practical quantum advantage or of a complete quantum minimum-finding algorithm.</p></footer>
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const DEF=[0,100,200,255];let IMG=[...DEF],sel=1;
+const bin=(v,n=8)=>v.toString(2).padStart(n,'0'),pos=i=>bin(i,2),rc=i=>`(${i>>1},${i&1})`,ket=s=>`<span class="ket">|${s}⟩</span>`;
+const minIdx=()=>IMG.indexOf(Math.min(...IMG)),tstr=()=>bin(IMG[minIdx()])+pos(minIdx());
+const bitsH=s=>[...s].map(c=>`<span class="bit ${c=='1'?'one':''}">${c}</span>`).join('');
+function img(el,o={}){el.innerHTML=IMG.map((v,i)=>`<div class="px ${o.s===i?'on':''}" data-i="${i}" style="background:rgb(${v},${v},${v});color:${v>120?'#000':'#fff'}">${v}<small>${rc(i)}</small></div>`).join('');el.onclick=o.f?e=>{const p=e.target.closest('.px');if(p)o.f(+p.dataset.i)}:null}
+const neqrK=()=>`${ket('Ψ')} = ½[ `+IMG.map((v,i)=>`<span class="term ${i==sel?'on':''}" data-i="${i}">${ket(bin(v))}${ket(pos(i))}</span>`).join(' + ')+' ]';
+function selPix(i){sel=i;hero();neqrSel();mkE('e7',[sel]);dd();W=0;why()}
+function hero(){img($('#himg'),{s:sel,f:selPix});const v=IMG[sel];$('#hinfo').innerHTML=`<div class="ui">Pixel <b>${rc(sel)}</b> · Intensity <b>${v}</b></div><p class="mono">Position binary: ${pos(sel)}<br>Intensity binary: ${bin(v)}</p><p><em>How can a quantum computer represent this relationship?</em></p><button class="pri" data-go="s7">Encode this pixel →</button>`}
+function ntab(el){el.innerHTML='<tr><th>Pixel</th><th>Position</th><th>Intensity</th><th>Binary</th></tr>'+IMG.map((v,i)=>`<tr data-i="${i}" class="${i==sel&&el.id=='nt'?'on':''}"><td>${rc(i)}</td><td class="mono">${pos(i)}</td><td>${v}</td><td class="mono">${bin(v)}</td></tr>`).join('')}
+function neqrSel(){ntab($('#nt'));ntab($('#nt2'));img($('#nimg'),{s:sel,f:selPix});$('#nk').innerHTML=neqrK();$('#pk').innerHTML=neqrK();const v=IMG[sel];$('#ninfo').innerHTML=`Pixel ${rc(sel)}: position ${ket(pos(sel))} is tied to intensity ${v} = ${ket(bin(v))}. <b>NEQR creates a correlation between position and intensity.</b>`}
+function dd(){const v=IMG[sel];$('#dd').innerHTML=`Pixel ${rc(sel)} · Position ${pos(sel)} · Intensity ${v} · Binary ${bin(v)} · Target ${ket(bin(v)+'⟩|'+pos(sel))}`}
+/* qubits */
+let Q=[0,0];function qr(){$('#q9').textContent='q9 = '+Q[0];$('#q8').textContent='q8 = '+Q[1];const p=''+Q[0]+Q[1],i=parseInt(p,2);$('#qo').innerHTML=`→ ${ket(p)} = pixel ${rc(i)}`;$('#qi').innerHTML=[7,6,5,4,3,2,1,0].map(t=>`<div class="qc"><span class="bit">0</span><small>q${t}</small></div>`).join('')}
+/* intensity */
+function inten(){const v=+$('#iv').value,fl=[7,6,5,4,3,2,1,0].filter(t=>v>>t&1);$('#ivn').textContent=v;$('#ib').innerHTML=[...bin(v)].map((c,j)=>`<div class="qc"><span class="bit ${c=='1'?'one':''}">${c}</span><small>q${7-j}</small></div>`).join('');$('#it').innerHTML=`${v} → <span class="mono">${bin(v)}</span>. Only the qubits holding a 1 are flipped: <b>${fl.length?fl.map(t=>'q'+t).join(', '):'none'}</b>.<span class="r"> ${v} = ${fl.map(t=>'2<sup>'+t+'</sup>').join(' + ')||'0'}</span>`}
+/* CCX panel */
+let CC='11';function ccx(){const on=CC=='11',c=b=>b=='1'?'#3fd0ff':'#0a1020',ln=y=>`<line x1="10" x2="250" y1="${y}" y2="${y}" stroke="#2b3d66"/>`;
+$('#ccxp').innerHTML=`<div class="ctl">${['00','01','10','11'].map(x=>`<button data-cc="${x}" class="${x==CC?'pri':''}">${x}</button>`).join('')}</div><svg viewBox="0 0 260 110" width="260" style="max-width:100%">${ln(20)}${ln(55)}${ln(90)}<line x1="130" x2="130" y1="20" y2="90" stroke="${on?'#3fd0ff':'#33456e'}" stroke-width="2"/><circle cx="130" cy="20" r="6" fill="${c(CC[0])}" stroke="#3fd0ff"/><circle cx="130" cy="55" r="6" fill="${c(CC[1])}" stroke="#3fd0ff"/><circle cx="130" cy="90" r="12" fill="${on?'#12485f':'#0a1020'}" stroke="${on?'#3fd0ff':'#7f93bf'}"/><path d="M118 90h24M130 78v24" stroke="${on?'#3fd0ff':'#7f93bf'}" stroke-width="2"/><g fill="#9aa8c7" font-size="12"><text x="12" y="14">control q9 = ${CC[0]}</text><text x="12" y="49">control q8 = ${CC[1]}</text><text x="12" y="84">target</text></g></svg>
+<p class="ui">Controls = ${CC} → ${on?'<b class="ok">target FLIPS</b>':'target unchanged'}</p><p class="b">If the controls are 11, apply X. Otherwise do nothing (identity).</p><p class="r">U = |11⟩⟨11| ⊗ X + (I − |11⟩⟨11|) ⊗ I → here acts as ${on?'X':'I'}.</p>
+<p class="mu">The CCX does not ask which pixel this is by measuring it. The gate is a conditional unitary operation: each component of the superposition experiences the transformation according to its control values.</p>`}
+/* why */
+let W=0;function why(){const sp=pos(sel),f=x=>[...x].map((c,j)=>sp[j]=='0'?1-c:+c).join('');
+$('#wy').innerHTML=['00','01','10','11'].map(p=>{const m=f(p),on=m=='11';return `<div class="wr ${W==2?(on?'lit':'dim'):''}">${ket(p)}${W>0?' → '+ket(m):''} ${p==sp?'<b>← selected pixel</b>':''} ${W==2?(on?'<b class="ok">CCX ACTS</b>':'no operation'):''}</div>`}).join('')+(W==2?'<p><b>Only the branch whose controls are 11 activates the CCX.</b> The other branches are not changed because at least one control qubit is 0.</p>':'')}
+/* encoder */
+const ENC={};
+function mkOps(px){const o=[{k:'H',q:9},{k:'H',q:8}];px.forEach(i=>{const x=[];[...pos(i)].forEach((c,j)=>{if(c=='0')x.push(9-j)});x.forEach(q=>o.push({k:'X',q,i,ph:0}));for(let t=0;t<8;t++)if(IMG[i]>>t&1)o.push({k:'C',t,i});x.forEach(q=>o.push({k:'X',q,i,ph:1}))});return o}
+const flip=(s,q)=>{const a=[...s],j=9-q;a[j]=1-a[j];return a.join('')};
+function simAll(ops){let br=[{o:'00',p:'00',I:0}];const st=[br];ops.forEach(o=>{if(o.k=='H')br=br.flatMap(b=>[b,{...b,o:flip(b.o,o.q),p:flip(b.p,o.q)}]).sort((a,b)=>a.o<b.o?-1:1);else if(o.k=='X')br=br.map(b=>({...b,p:flip(b.p,o.q)}));else br=br.map(b=>b.p=='11'?{...b,I:b.I^(1<<o.t)}:b);st.push(br)});return st}
+const Y=q=>q>7?24+(9-q)*26:90+(7-q)*26;
+function circ(ops,k,sel){const W=110+ops.length*46;let s=`<svg viewBox="0 0 ${W} 300" width="${W}" height="300" style="display:block">`;
+for(let q=9;q>=0;q--)s+=`<line x1="36" x2="${W-8}" y1="${Y(q)}" y2="${Y(q)}" stroke="#2b3d66"/><text x="6" y="${Y(q)+4}" fill="#9aa8c7" font-size="12">q${q}</text>`;
+s+=`<line x1="0" x2="${W}" y1="72" y2="72" stroke="#3a4d7a" stroke-dasharray="3 5"/><text x="40" y="10" fill="#a78bfa" font-size="10">POSITION</text><text x="40" y="84" fill="#a78bfa" font-size="10">INTENSITY</text>`;
+ops.forEach((o,i)=>{const x=80+i*46,c=i==k-1?'#3fd0ff':i==sel?'#fbbf24':i<k?'#8aa0cc':'#33456e';s+=`<g class="gt" data-i="${i}" opacity="${i<k?1:.5}" style="cursor:pointer"><rect x="${x-20}" y="0" width="40" height="300" fill="transparent"/>`;
+if(o.k=='C')s+=`<line x1="${x}" x2="${x}" y1="${Y(9)}" y2="${Y(o.t)}" stroke="${c}" stroke-width="2"/><circle cx="${x}" cy="${Y(9)}" r="5" fill="${c}"/><circle cx="${x}" cy="${Y(8)}" r="5" fill="${c}"/><circle cx="${x}" cy="${Y(o.t)}" r="11" fill="#0c1426" stroke="${c}" stroke-width="2"/><path d="M${x-8} ${Y(o.t)}h16M${x} ${Y(o.t)-8}v16" stroke="${c}" stroke-width="2"/>`;
+else s+=`<rect x="${x-13}" y="${Y(o.q)-13}" width="26" height="26" rx="4" fill="#0c1426" stroke="${c}" stroke-width="2"/><text x="${x}" y="${Y(o.q)+5}" text-anchor="middle" fill="${c}" font-size="14" font-weight="700">${o.k}</text>`;s+='</g>'});return s+'</svg>'}
+function narr(o,S){if(o.k=='H')return `Hadamard on q${o.q}: every branch splits into two equal-amplitude branches. Positions are in superposition; intensities are still 00000000.`;
+const p=`Pixel ${rc(o.i)} = ${IMG[o.i]} = ${bin(IMG[o.i])}.`;
+if(o.k=='X'&&!o.ph)return `${p} Temporary X on q${o.q}: CCX only reacts to controls 11, so we turn the wanted position ${pos(o.i)} into 11. Watch every branch get relabelled in the table.`;
+if(o.k=='C')return `CCX (controls q9,q8 → target q${o.t}). This bit of ${bin(IMG[o.i])} is 1. Only the branch with controls 11 (lit row) flips q${o.t}. For the others, at least one control is 0 → condition not satisfied → unchanged.`;
+return `${p} The same X again restores the position (11 → ${pos(o.i)}). <b>Pixel ${rc(o.i)} encoded:</b> ${ket(bin(IMG[o.i]))}${ket(pos(o.i))}.`}
+function gInfo(o){if(!o)return'Click a gate to inspect it.';if(o.k=='C')return `Gate: CCX<br>Controls: q9, q8<br>Target: q${o.t}<br>Condition: q9 = 1 AND q8 = 1<br>Action: q${o.t} flips`;if(o.k=='X')return `Gate: X<br>Target: q${o.q}<br>Condition: none<br>Action: q${o.q} flips in every branch (temporary relabelling)`;return `Gate: H<br>Target: q${o.q}<br>Action: |0⟩ → (|0⟩+|1⟩)/√2`}
+function mkE(id,px){const el=$('#'+id);if(ENC[id]&&ENC[id].t)clearInterval(ENC[id].t);const ops=mkOps(px),S={ops,st:simAll(ops),k:0,sel:null,t:null,px};ENC[id]=S;
+el.innerHTML=`<div class="ctl"><button data-a="b">◀ Back</button><button class="pri" data-a="n">Next ▶</button><button data-a="p">Auto ⏵</button><button data-a="r">↺ Restart</button><span class="ui mu ct"></span></div><div class="panel nr"></div><div class="cs"></div><div class="gi mono"></div><div class="panel" style="overflow-x:auto"><table class="tb"></table></div><div class="eqb stt"></div>`;
+el.onclick=e=>{const a=e.target.closest('[data-a]'),g=e.target.closest('.gt');if(g){S.sel=+g.dataset.i;return drawE(id)}if(!a)return;const d=a.dataset.a;
+if(d=='n'&&S.k<ops.length)S.k++;if(d=='b'&&S.k>0)S.k--;if(d=='r'){S.k=0}S.sel=null;
+if(d=='p'){if(S.t){clearInterval(S.t);S.t=null}else{if(S.k>=ops.length)S.k=0;S.t=setInterval(()=>{if(S.k>=ops.length){clearInterval(S.t);S.t=null}else{S.k++;S.sel=null}drawE(id)},1300)}}drawE(id)};drawE(id)}
+function drawE(id){const S=ENC[id],el=$('#'+id),k=S.k,b=S.st[k],last=k?S.ops[k-1]:null,n=b.length,A=n==1?'':n==2?'1/√2 ':'½ ';
+el.querySelector('.ct').textContent=`step ${k} / ${S.ops.length}`;
+el.querySelector('.nr').innerHTML=k?narr(last):'All qubits start in |0⟩. Press <b>Next</b> to apply the first gate.';
+const cs=el.querySelector('.cs');cs.innerHTML=circ(S.ops,k,S.sel);if(k)cs.scrollLeft=80+(k-1)*46-cs.clientWidth/2;
+el.querySelector('.gi').innerHTML=gInfo(S.ops[S.sel??(k-1)]);
+el.querySelector('.tb').innerHTML='<tr><th>Branch from</th><th>Controls q9q8</th><th>Intensity q7…q0</th><th>CCX</th></tr>'+b.map(r=>{const c=last&&last.k=='C',on=c&&r.p=='11';return `<tr class="${on?'lit':''}"><td>${rc(parseInt(r.o,2))} ${ket(r.o)}</td><td>${ket(r.p)}</td><td class="mono">${bin(r.I)}</td><td>${c?(on?'condition met → q'+last.t+' flips':'not met → unchanged'):'—'}</td></tr>`}).join('');
+let t=`${ket('state')} = ${A}[ ${b.map(r=>ket(bin(r.I))+ket(r.p)).join(' + ')} ]`;
+if(k==S.ops.length&&S.px.length==1)t=`<div class="big">PIXEL ${rc(S.px[0])} ENCODED · position ${pos(S.px[0])} · intensity ${bin(IMG[S.px[0]])}</div>`+t+'<p class="mu">The other branches are still 00000000 — their pixels are not written yet.</p>';
+if(k==S.ops.length&&S.px.length==4)t=`<div class="big">NEQR STATE COMPLETE</div>`+neqrK().replace('Ψ','Ψ');
+el.querySelector('.stt').innerHTML=t}
+/* Grover */
+const N=1024,TH=Math.asin(1/Math.sqrt(N)),KO=Math.floor(Math.PI/4*Math.sqrt(N));
+let G={t:0,a:1/32,b:1/32,last:'',hl:-1,tm:null};
+const BL={o:'Apply Oracle',d:'Apply Diffuser',i:'Run one Grover iteration',a:'Run automatically',r:'Reset',m:'Measure'};
+const gp=(id,k)=>$('#'+id).innerHTML=`<div class="panel"><div class="ctl">${[...k].map(c=>`<button data-g="${c}" class="${c=='i'||c=='m'?'pri':''}">${BL[c]}</button>`).join('')}</div><svg class="gsv" viewBox="0 0 560 235"></svg><div class="gs"></div></div>`;
+function gO(){G.a=-G.a;G.last='o';rG()}
+function gD(){const m=(G.a+(N-1)*G.b)/N;G.a=2*m-G.a;G.b=2*m-G.b;G.t++;G.last='d';rG()}
+function gA(){if(G.tm){clearInterval(G.tm);G.tm=null}else{if(G.t>=KO)gR();G.tm=setInterval(()=>{if(G.t>=KO){clearInterval(G.tm);G.tm=null}else{G.a=-G.a;gD();return}rG()},750)}rG()}
+function gR(){clearInterval(G.tm);G={t:0,a:1/32,b:1/32,last:'',hl:-1,tm:null};$$('.mres').forEach(e=>e.textContent='Press Measure.');rG()}
+function gM(){const p=G.a**2,T=tstr();let s=T;if(Math.random()>=p)do{s=bin(Math.random()*1024|0,10)}while(s==T);const hit=s==T,I=parseInt(s.slice(0,8),2),q=s.slice(8);G.hl=hit?parseInt(q,2):-1;
+$$('.mres').forEach(e=>e.innerHTML=`<div class="ui">Measured state:</div><div class="eqb">${ket(s)}</div><p class="mono">Position: ${q} → pixel ${rc(parseInt(q,2))}<br>Intensity: ${I}</p>`+(hit?'<div class="big">Darkest pixel found.</div>':`<p class="warn">This shot missed the target (probability ${(100-p*100).toFixed(2)}%). Amplify further, or measure again.</p>`));rG()}
+function rG(){const m=(G.a+(N-1)*G.b)/N,mx=Math.max(Math.abs(G.a),Math.abs(G.b),.05)*1.1,T=tstr(),L=[T,...['1111111111','1010101010','0101010101','0011001100'].filter(x=>x!=T).slice(0,3)],V=[G.a,G.b,G.b,G.b],Y=a=>115-a/mx*90;
+let s=`<line x1="30" x2="550" y1="115" y2="115" stroke="#33456e"/><line x1="30" x2="550" y1="${Y(m)}" y2="${Y(m)}" stroke="#6ee7a0" stroke-dasharray="5 4"/><text x="548" y="${Y(m)-4}" text-anchor="end" fill="#6ee7a0" font-size="11">mean ā</text><text x="30" y="12" fill="#9aa8c7" font-size="11">amplitude axis ±${mx.toFixed(2)}</text>`;
+V.forEach((v,i)=>{const x=60+i*125,y=Math.min(115,Y(v));s+=`<rect x="${x}" y="${y}" width="70" height="${Math.max(1,Math.abs(Y(v)-115))}" fill="${v<0?'#fbbf24':i?'#3b5b8f':'#3fd0ff'}" rx="2"/><text x="${x+35}" y="${v<0?y+Math.abs(Y(v)-115)+14:y-5}" text-anchor="middle" fill="#e8edf7" font-size="12">${v.toFixed(3)}</text><text x="${x+35}" y="212" text-anchor="middle" fill="#9aa8c7" font-size="10" font-family="monospace">|${L[i]}⟩</text>`});
+s+=`<text x="95" y="228" text-anchor="middle" fill="#3fd0ff" font-size="10">target</text><text x="345" y="228" text-anchor="middle" fill="#9aa8c7" font-size="10">each of the 1023 other states has the same amplitude</text>`;
+const P=G.a*G.a,PT=Math.sin((2*G.t+1)*TH)**2,why=G.last=='o'?'The oracle flipped the <b>phase</b> (sign) of the target. Probability a² has not changed.':G.last=='d'?'The diffuser reflected every amplitude about the mean: the target amplitude grew.':'Uniform superposition: all 1024 states share amplitude 1/32.';
+const h=`<p>${why}${G.t>KO?' <b class="warn">Past ≈'+KO+' iterations the state rotates beyond the target and the probability falls.</b>':''}</p><p class="ui">Iteration <b>${G.t}</b> · target amplitude ${G.a.toFixed(4)} · P(target) = <b>${(P*100).toFixed(2)}%</b> · theory sin²((2t+1)θ) = ${(PT*100).toFixed(2)}%<span class="r"><br>a = r·e<sup>iφ</sup>, r = ${Math.abs(G.a).toFixed(4)}, φ = ${G.a<0?'π':'0'} · θ = ${TH.toFixed(4)} rad · k<sub>opt</sub> = ⌊(π/4)√N⌋ = ${KO} (N = 1024)</span></p>`;
+$$('.gsv').forEach(e=>e.innerHTML=s);$$('.gs').forEach(e=>e.innerHTML=h);$$('[data-g=a]').forEach(e=>e.textContent=G.tm?'Pause':BL.a);$$('.mimg').forEach(e=>img(e,{s:G.hl}))}
+/* quiz */
+const QZ=[['What does the position register represent?',['Which pixel (row, column) a branch belongs to','The pixel brightness','The number of shots'],'Two qubits label four positions: 00, 01, 10, 11.'],['Why do we need 8 intensity qubits?',['8 bits give 256 grayscale levels (0–255)','There are 8 pixels','We need 8 Hadamards'],'8 bits = 2⁸ = 256 possible values.'],['Which binary string is 100?',['01100100','11001000','00110011'],'100 = 64 + 32 + 4 = 01100100.'],['Why temporarily turn 01 into 11?',['CCX only reacts to controls 11, so the chosen branch must look like 11','To measure the qubit','To keep position 11 forever'],'The second X restores the position afterwards.'],['When does the CCX activate?',['When both controls are 1','When either control is 1','Always'],'Controls 11 → apply X; otherwise identity.'],['Why are the other branches unchanged?',['At least one control is 0, so identity acts on them','They were measured','They were deleted'],'The gate is a conditional unitary acting on every branch, not a measurement.'],['What does the oracle change?',['The phase (sign) of the target amplitude','The target probability directly','The image'],'The oracle changes phase; the diffuser turns it into amplitude.'],['What does the diffuser do?',['Inversion about the mean: phase difference → larger target amplitude','Measures the register','Re-encodes the image'],'a → 2ā − a.']];
+let qi=0;function quiz(){if(qi>=QZ.length){$('#qz').innerHTML='<div class="big">Teaching mode complete ✓</div><button id="qre">Restart</button>';return}const [q,o,e]=QZ[qi],ord=o.map((_,j)=>(j+qi)%o.length);
+$('#qz').innerHTML=`<p class="ui mu">STEP ${qi+1} / ${QZ.length}</p><p><b>${q}</b></p>`+ord.map(j=>`<button data-qa="${j}" style="display:block;width:100%;text-align:left;margin:6px 0">${o[j]}</button>`).join('')+'<div id="qf"></div>'}
+/* events */
+document.addEventListener('click',e=>{const t=e.target,c=s=>t.closest(s);let x;
+if(x=c('[data-go]'))return document.getElementById(x.dataset.go).scrollIntoView();
+if(x=c('[data-g]')){const d=x.dataset.g;({o:gO,d:gD,i:()=>{G.a=-G.a;gD()},a:gA,r:gR,m:gM})[d]();return}
+if(x=c('[data-cc]')){CC=x.dataset.cc;return ccx()}
+if(x=c('[data-w]')){W=+x.dataset.w;return why()}
+if(x=c('[data-q]')){Q[+x.dataset.q]^=1;return qr()}
+if(x=c('.term')||c('#nt tr[data-i]')){return selPix(+x.dataset.i)}
+if(x=c('[data-qa]')){const [,,ex]=QZ[qi],o=QZ[qi][1],ok=+x.dataset.qa==0;$$('[data-qa]').forEach(b=>b.disabled=true);x.style.borderColor=ok?'#6ee7a0':'#fbbf24';$('#qf').innerHTML=`<p class="${ok?'ok':''}"><b>${ok?'Correct.':'Not quite — correct answer: '+o[0]+'.'}</b> ${ex}</p><button class="pri" id="qn">Next →</button>`;return}
+if(c('#qn')){qi++;return quiz()}if(c('#qre')){qi=0;return quiz()}
+if(c('#nan')){const T=$$('#nk .term');T.forEach(z=>z.classList.add('hid'));T.forEach((z,i)=>setTimeout(()=>z.classList.remove('hid'),500+i*900))}
+if(c('#prs')){IMG=[...DEF];sel=1;ui()}
+if(c('#penc')){document.getElementById('e9').scrollIntoView();const S=ENC.e9;if(!S.t)c('#e9')||$('#e9 [data-a=r]').click(),$('#e9 [data-a=p]').click()}});
+function ui(){hero();neqrSel();dd();why();mkE('e7',[sel]);mkE('e9',[0,1,2,3]);$('#fin').innerHTML=`Image ${JSON.stringify([[IMG[0],IMG[1]],[IMG[2],IMG[3]]])}<br>${neqrK()}<br>Target: ${ket(tstr())} → Pixel ${rc(minIdx())}, intensity ${Math.min(...IMG)}`;
+$('#pgi').innerHTML=IMG.map((v,i)=>`<label class="ui mu">${rc(i)}<input type="number" min="0" max="255" value="${v}" data-pi="${i}"></label>`).join('');gR()}
+$('#pgi').addEventListener('change',e=>{const i=+e.target.dataset.pi;IMG[i]=Math.max(0,Math.min(255,parseInt(e.target.value)||0));ui()});
+/* init */
+const NAV=[['01 Image','s1'],['02 Representation','s3'],['03 Encoding','s4'],['04 CCX','s6'],['05 Oracle','s10'],['06 Diffuser','s11'],['07 Search','s12'],['08 Result','s13']];
+$('#pn').innerHTML=NAV.map((n,i)=>`<a href="#${n[1]}" data-n="${i+1}">${n[0]}</a>`).join('');
+gp('g10','or');gp('g11','dr');gp('g12','iar');gp('g13','imr');gp('g14','odarm');
+mkE('e4',[]);qr();inten();ccx();quiz();ui();
+$('#iv').oninput=inten;
+const secs=$$('section');function cur(){let c=0;secs.forEach((s,i)=>{if(s.getBoundingClientRect().top<140)c=i});return c}
+function act(){const p=secs[cur()].dataset.p;$$('#pn a').forEach(a=>a.classList.toggle('on',a.dataset.n==p))}
+addEventListener('scroll',act,{passive:true});act();
+$('#pv').onclick=()=>secs[Math.max(0,cur()-1)].scrollIntoView();$('#nx').onclick=()=>secs[Math.min(secs.length-1,cur()+1)].scrollIntoView();
+$('#mb').onclick=()=>{document.body.classList.add('beg');$('#mb').classList.add('on');$('#mr').classList.remove('on')};
+$('#mr').onclick=()=>{document.body.classList.remove('beg');$('#mr').classList.add('on');$('#mb').classList.remove('on')};
+</script></body></html>
