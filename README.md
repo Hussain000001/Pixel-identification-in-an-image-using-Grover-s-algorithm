@@ -2,6 +2,24 @@
 
 A Master's thesis project exploring the application of **Grover's quantum search algorithm** to pixel identification in grayscale images, using quantum image representation and quantum circuit simulation.
 
+## 🚀 Interactive Demonstration
+
+Explore an interactive visualization of my Master's thesis project. The tool demonstrates:
+
+- NEQR quantum image representation
+- Position and intensity registers
+- Controlled encoding using CCX (Toffoli) gates
+- Grover's phase oracle
+- Grover's diffuser
+- Amplitude amplification
+- Final quantum measurement
+
+### 🔗 Live Demo
+
+**[▶ Launch the Interactive Grover Demonstration](https://pixel-identification-in-an-image-us.vercel.app/)**
+
+> The interactive tool is designed as an educational companion to the thesis, allowing students to explore how a classical 2×2 grayscale image is represented and searched using quantum computing concepts.
+
 ## About the Project
 
 This project investigates how quantum search techniques can be used to identify and locate a target pixel within a grayscale image.
