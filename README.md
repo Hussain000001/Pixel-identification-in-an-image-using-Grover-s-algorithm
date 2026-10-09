@@ -2,7 +2,7 @@
 
 [![Interactive Tool](https://img.shields.io/badge/Explore-Interactive_Tool-00BFA6?style=for-the-badge)](https://pixel-identification-in-an-image-us.vercel.app/)
 
-## 🧭 Project Workflow
+##  Project Workflow
 
 ![Project workflow: Pixel identification using Grover's algorithm](results/project-workflow.png)
 
@@ -174,6 +174,17 @@ The implementation performs the following steps:
 > **Note:** The current modern implementation demonstrates Grover's search for the known target state in this specific 2 × 2 example. It is not a general-purpose algorithm that automatically finds the darkest pixel of an arbitrary image.
 
 ## Results
+
+
+## 📊 Key Results
+
+- **Input image:** 2×2 grayscale image with pixel intensities 0, 100, 200, and 255.
+- **Image representation:** NEQR, using 2 position qubits and 8 intensity qubits.
+- **Total qubits:** 10 for the combined position and intensity representation.
+- **Search target:** The darkest pixel, with intensity 0, at position (0,0).
+- **Grover simulation:** The target bitstring `0000000000` was measured 8,183 times in 8,192 shots in the recorded run (approximately 99.89%).
+
+These results demonstrate the small-scale example. They do not establish a practical quantum advantage or a complete quantum minimum-finding implementation.
 
 ### Input Image
 
