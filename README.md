@@ -2,6 +2,10 @@
 
 [![Interactive Tool](https://img.shields.io/badge/Explore-Interactive_Tool-00BFA6?style=for-the-badge)](https://pixel-identification-in-an-image-us.vercel.app/)
 
+## 🧭 Project Workflow
+
+![Project workflow: Pixel identification using Grover's algorithm](results/project-workflow.png)
+
 # Pixel Identification in an Image Using Grover's Algorithm
 
 A Master's thesis project exploring the application of **Grover's quantum search algorithm** to pixel identification in grayscale images, using quantum image representation and quantum circuit simulation.
