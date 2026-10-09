@@ -308,3 +308,43 @@ For citation information about this repository, see
 ## Citation
 
 If you use this project or the associated thesis in your work, please cite it using the information provided in [`CITATION.cff`](CITATION.cff).
+
+## 👨‍💻 About the Author
+
+**Mohd Hussain Mir** is a Physics postgraduate from the
+National Institute of Technology Srinagar, interested in
+the broader landscape of computation, its fundamental
+principles, and its potential to transform how we solve
+problems and understand the world.
+
+My interests span computational physics, scientific
+computing, algorithms, mathematical modelling, artificial
+intelligence, and machine learning. I am also interested
+in emerging computational paradigms, particularly quantum
+computing, quantum hardware, and the technologies that
+connect theoretical ideas with physical implementations.
+
+I enjoy exploring the connections between mathematics,
+physics, and computer science, and understanding how
+abstract concepts can be translated into practical tools
+and meaningful applications.
+
+Beyond research, I am passionate about making computation
+accessible to a wider audience. Through education,
+open-source projects, and interactive learning experiences,
+I aim to bring complex computational ideas closer to
+students, educators, and curious minds.
+
+My broader goal is to contribute to a world where more
+people can understand, explore, and participate in the
+technologies shaping the future of computation.
+
+### Areas of Interest
+
+- Computational physics and scientific computing
+- Algorithms, mathematics, and computational thinking
+- Artificial intelligence and machine learning
+- Quantum computing and quantum algorithms
+- Quantum hardware and quantum technologies
+- Emerging computational paradigms
+- Computational education and public outreach
