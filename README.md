@@ -2,9 +2,6 @@
 
 [![Interactive Tool](https://img.shields.io/badge/Explore-Interactive_Tool-00BFA6?style=for-the-badge)](https://pixel-identification-in-an-image-us.vercel.app/)
 
-##  Project Workflow
-
-![Project workflow: Pixel identification using Grover's algorithm](results/project-workflow.png)
 
 # Pixel Identification in an Image Using Grover's Algorithm
 
@@ -70,28 +67,9 @@ The four pixels are represented as:
 
 The darkest pixel in this example is the pixel at `(0,0)`, with intensity `0`.
 
-## Project Workflow
+##  Project Workflow
 
-The project follows these main steps:
-
-1. **Create a grayscale image**
-   - A 2 × 2 grayscale image is used as the test image.
-
-2. **Represent the image using NEQR**
-   - Pixel positions are represented using 2 qubits.
-   - Pixel intensities are represented using 8 qubits.
-
-3. **Construct the Grover oracle**
-   - The oracle marks the target quantum state.
-
-4. **Apply amplitude amplification**
-   - The Grover diffuser amplifies the probability of the marked state.
-
-5. **Measure the quantum circuit**
-   - The circuit is executed using a quantum circuit simulator.
-
-6. **Analyze the measurement results**
-   - The resulting measurement distribution is examined to determine how strongly the marked state is amplified.
+![Project workflow: Pixel identification using Grover's algorithm](results/project-workflow.png)
 
 ## Grover's Algorithm
 
@@ -190,14 +168,9 @@ These results demonstrate the small-scale example. They do not establish a pract
 
 The experiment uses the following 2 × 2 grayscale image:
 
-```text
-[[  0, 100],
- [200, 255]]
-```
 
 The darkest pixel has intensity `0` and is located at position `(0,0)`.
-
-![Original 2×2 grayscale image](./results/original_2x2_image.png)
+<img src="results/original_2x2_image.png" alt="Grayscale Image" width="500">
 
 ### Grover Search
 
@@ -218,8 +191,7 @@ Intensity: 0
 
 Using **8192 measurement shots**, the target state was observed **8183 times**, giving a success probability of approximately **99.89%**.
 
-![Grover histogram](./results/grover_histogram.png)
-
+<img src="results/grover_histogram.png" alt="Grover search histogram showing amplification of the target state" width="500">
 The result demonstrates strong amplitude amplification of the marked quantum state.
 
 ### Conclusion
@@ -317,6 +289,17 @@ The complete thesis is available in the [`thesis/`](thesis/) directory.
 - Explore quantum minimum-finding algorithms that reduce dependence on classical preprocessing.
 - Evaluate circuit depth, gate count, measurement statistics, and noise on quantum hardware.
 - Compare the quantum approach with classical pixel-search methods.
+
+  ## 📚 References
+
+The theoretical background and methods used in this project are
+discussed in the Master's thesis and its bibliography.
+
+The complete reference list is available in the
+[thesis PDF](thesis/Final%20project%20thesis.pdf).
+
+For citation information about this repository, see
+[CITATION.cff](CITATION.cff).
 
 ## Citation
 
