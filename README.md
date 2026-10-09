@@ -290,6 +290,23 @@ This repository is based on the Master's thesis:
 
 The complete thesis is available in the [`thesis/`](thesis/) directory.
 
+## 🔬 Research Limitations and Future Work
+
+### Current Limitations
+
+- The demonstration uses a small 2×2 grayscale image to explain quantum image representation and Grover's search.
+- The current interactive implementation uses a predefined target state; it does not implement a complete quantum minimum-finding algorithm.
+- The educational simulation illustrates the concepts and does not establish a practical quantum advantage for image processing.
+- The results depend on the circuit implementation and simulation settings.
+
+### Future Work
+
+- Extend the implementation to larger grayscale images.
+- Investigate reversible comparison circuits for encoding minimum-intensity search into a quantum oracle.
+- Explore quantum minimum-finding algorithms that reduce dependence on classical preprocessing.
+- Evaluate circuit depth, gate count, measurement statistics, and noise on quantum hardware.
+- Compare the quantum approach with classical pixel-search methods.
+
 ## Citation
 
 If you use this project or the associated thesis in your work, please cite it using the information provided in [`CITATION.cff`](CITATION.cff).
