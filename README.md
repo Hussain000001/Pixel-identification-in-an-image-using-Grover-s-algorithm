@@ -9,6 +9,10 @@ A Master's thesis project exploring the application of **Grover's quantum search
 
 ##  Interactive Demonstration
 
+### Preview
+
+![Interactive Grover pixel identification tool](results/interactive-demo.png)
+
 Explore an interactive visualization of my Master's thesis project. The tool demonstrates:
 
 - NEQR quantum image representation
