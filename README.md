@@ -264,6 +264,13 @@ The program creates the 2 × 2 grayscale example, constructs the Grover circuit,
 - NumPy
 - Matplotlib
 
+### Install Dependencies
+
+From the repository's root directory, run:
+
+```bash
+pip install -r requirements.txt
+
 ## Thesis
 
 This repository is based on the Master's thesis:
