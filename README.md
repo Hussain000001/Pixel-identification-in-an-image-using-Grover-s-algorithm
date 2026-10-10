@@ -271,7 +271,8 @@ From the repository's root directory, run:
 ```bash
 pip install -r requirements.txt
 
-## Thesis
+
+####Thesis
 
 This repository is based on the Master's thesis:
 
